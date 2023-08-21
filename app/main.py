@@ -7,7 +7,7 @@ from typing import List
 app = FastAPI()
 
 @app.get("/wallet/balance/")
-async def get_wallet_balance_endpoint(wallet: str) -> WalletBalance:
+async def get_wallet_balance_endpoint(wallet: str) -> dict:
     wallet = format_wallet(wallet)
     # Get data from blockchain
     balance = await get_wallet_balance(wallet)
@@ -16,11 +16,11 @@ async def get_wallet_balance_endpoint(wallet: str) -> WalletBalance:
     history = await get_wallet_history(wallet)
 
     # Create Wallet Balance Instance
-    wallet_balance = WalletBalance(wallet=wallet, balance=balance['ether'], balance_usd=balance['usd'] ,history=history)
+    wallet_balance = WalletBalance(wallet=wallet, balance=balance['ether'], balance_usd=balance['usd'])
 
     # Save wallet Balance Instance
     await save_wallet_balance(wallet_balance)
-    return wallet_balance
+    return {'history':history, **wallet_balance.dict()}
 
 @app.get("/wallet/history/")
 async def get_wallet_history_endpoint(wallet: str) -> List[WalletHistory]:

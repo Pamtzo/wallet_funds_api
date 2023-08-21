@@ -10,7 +10,6 @@ class WalletBalance(BaseModel):
     wallet: str
     balance: float
     balance_usd: float
-    history: List[WalletHistory]
     last_updated: Optional[str] = None
 
     def __init__(self, **data):

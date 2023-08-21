@@ -8,8 +8,6 @@ def connect_to_mongodb():
     client = AsyncIOMotorClient(MONGODB_URL)
     return client[DB_NAME]
 
-
-
 async def get_wallet_history(wallet: str):
     db = connect_to_mongodb()
     collection = db[DB_NAME]
