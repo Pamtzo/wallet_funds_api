@@ -9,6 +9,7 @@ app = FastAPI()
 @app.get("/wallet/balance/")
 async def get_wallet_balance_endpoint(wallet: str) -> dict:
     wallet = format_wallet(wallet)
+
     # Get data from blockchain
     balance = await get_wallet_balance(wallet)
 
@@ -25,5 +26,6 @@ async def get_wallet_balance_endpoint(wallet: str) -> dict:
 @app.get("/wallet/history/")
 async def get_wallet_history_endpoint(wallet: str) -> List[WalletHistory]:
     wallet = format_wallet(wallet)
+    
     history = await get_wallet_history(wallet)
     return history
